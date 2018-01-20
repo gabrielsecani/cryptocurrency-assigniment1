@@ -1,13 +1,19 @@
 package scroogecoin;
 
-import org.junit.jupiter.api.Test;
-
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
 import org.junit.Assert;
-import org.junit.Before;
-
-import java.security.*;
-import java.util.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by xinszhou on 11/01/2017.
@@ -34,7 +40,7 @@ public class TxHandlerTest {
     private ArrayList<UTXO> utxoSet;
     private int maxValidInput;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         people = generatePeople(NUM_PEOPLE);
 
@@ -73,7 +79,6 @@ public class TxHandlerTest {
     @Test
     public void test1() throws Exception {
         //System.out.println("Test 1: test isValidTx() with valid transactions");
-
         TxHandler txHandler = new TxHandler(new UTXOPool(utxoPool));
 
         for (int i = 0; i < NUM_TRANSACTIONS_PER_TEST; i++) {
@@ -124,7 +129,7 @@ public class TxHandlerTest {
 
     @Test
     public void test2() throws Exception {
-        //  System.out.println("Test 2: test isValidTx() with transactions containing signatures of incorrect data");
+    	//  System.out.println("Test 2: test isValidTx() with transactions containing signatures of incorrect data");
         TxHandler txHandler = new TxHandler(new UTXOPool(utxoPool));
 
         for (int i = 0; i < NUM_TRANSACTIONS_PER_TEST; i++) {
@@ -173,7 +178,6 @@ public class TxHandlerTest {
     @Test
     public void test3() throws Exception {
         // System.out.println("Test 3: test isValidTx() with transactions containing signatures using incorrect private keys");
-
         TxHandler txHandler = new TxHandler(new UTXOPool(utxoPool));
         for (int i = 0; i < NUM_TRANSACTIONS_PER_TEST; i++) {
             Transaction tx = new Transaction();

@@ -74,7 +74,9 @@ public class TxHandler {
 	 * @return boolean
 	 */
 	private boolean inputValuesGreaterThanOrEqualToOutput(Transaction tx) {
-		double inps = tx.getInputs().stream().mapToDouble(inx -> tx.getOutput(inx.outputIndex).value).sum();
+		double inps = tx.getInputs().stream()
+				.map(inp -> new UTXO(inp.prevTxHash, inp.outputIndex))
+				.mapToDouble(utxo -> pool.getTxOutput(utxo).value).sum();
 		double outs = tx.getOutputs().stream().mapToDouble(outx -> outx.value).sum();
 		return inps >= outs;
 	}
